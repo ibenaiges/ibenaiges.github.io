@@ -1,0 +1,367 @@
+/* Estils globals de la pàgina */
+* {
+    box-sizing: border-box; /* Això assegura que el padding i el border estan inclosos en l'amplada total dels elements */
+}
+
+html, body {
+    height: 100%; /* S'assegura que l'altura de la pàgina pren tota l'altura de la finestra del navegador */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estils pels elements específics de la pàgina */
+
+/* Layout principal */
+.layout {
+    display: flex;
+    height: 100%;
+}
+
+/* Panell de l'esquerra/menú */
+.left-panel {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(24, 24, 24, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició per la imatge/logo de la part de dalt */
+.left-panel > .top {
+    height: 20%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.left-panel > .top::before {
+    content: '';
+    position: absolute;
+    top: 4%;
+    left: 4%;
+    right: 0;
+    bottom: 0;
+    transform: translate(-2%, -2%);
+    background-size: 100%;
+    background-image: url('BCN.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
+/* Definició bàsica dels contenidors restants del panell esquerre */
+.left-panel > .middle {
+    height: 5%;
+    width: 100%;
+    padding: 10px;
+}
+
+.left-panel > .bottom {
+    height: 70%;
+    width: 100%;
+    padding: 10px;
+}
+
+.left-panel > .foot {
+    height: 5%;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Definició bàsica de la zona on es mostra tota la informació */
+.main {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(31, 31, 31, 1.0);
+}
+
+/* Definició de la zona de títol */
+.main > .title {
+    height: 5%;
+    width: 100%;
+    padding: 5px;
+    font-size: 2em;
+    text-align: center;
+    color: rgba(109, 118, 129, 1.0);
+    font-family: 'Arial', sans-serif;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: rgba(31, 31, 31, 1.0);
+    font-weight: bold;
+}
+
+/* Definició de la zona superior */
+.main > .top {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Definició dels divs d'estadistiques */
+.main > .top > .stats {
+    width: 25%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Definició de la zona central */
+.main > .middle {
+    height: 35%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Definició de la zona del gràfic nightingdale per mes */
+.main > .middle > .vict_mes {
+    width: 33.33%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la zona del gràfic nightingdale per dia de la setmana */
+.main > .middle > .vict_setmana {
+    width: 33.33%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la zona del gràfic nightingdale per torn del dia */
+.main > .middle > .vict_hora {
+    width: 33.33%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la zona de baix */
+.main > .bottom {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Definició de la que conté el gràfic de bombolles */
+.main > .bottom > .bombolles {
+    width: 60%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la que conté el mapa cloroplètic */
+.main > .bottom > .mapa {
+    width: 40%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la zona de dalt alternativa */
+.main > .top_evo {
+    height: 47.5%;
+    width: 100%;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Definició de la que conté el gràfic evolutiu per anys */
+.main > .top_evo > .evo_anys {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la zona de baix alternativa */
+.main > .bottom_evo {
+    height: 47.5%;
+    width: 100%;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Definició de la que conté el gràfic de bombolles per la causa dels vianants */
+.main > .bottom_evo > .evo_causa_vianant {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició de la que conté el gràfic de bombolles pels tipus de vehicles */
+.main > .bottom_evo > .evo_vehicles {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(240, 240, 240, 1.0);
+    border: 0.5px solid rgba(64, 64, 64, 1.0);
+}
+
+/* Definició genèrica dels SVG */
+svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Definició de les opcions que mostra el desplegable per tipus de vehicle */
+.checkbox-option {
+    display: block;
+    margin-bottom: 0px;
+    overflow: hidden;
+    line-height: 1;
+    font-size: 1em;
+    background-color: rgba(43, 43, 43, 1.0);
+    color: rgba(109, 118, 129, 1.0);
+}
+
+.checkbox-option input[type="checkbox"] {
+    float: left;
+    margin-right: 5px;
+}
+
+.checkbox-option span {
+    display: block;
+    padding-left: 24px;
+}
+
+/* Definició del contenidor del desplegable per tipus de vehicle */
+.checkbox-container.desplegable {
+    position: absolute;
+    z-index: 100;
+    background-color: rgba(43, 43, 43, 1.0);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Definició del botó que permet elegir el tipus de vehicle */
+#toggleButtonVehicle {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(24, 24, 24, 1.0);
+    color: rgba(109, 118, 129, 1.0);
+    border: 2px solid rgba(43, 43, 43, 1.0);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+#toggleButtonVehicle:hover {
+    background-color: rgba(43, 43, 43, 1.0);
+}
+
+#toggleButtonVehicle:active {
+    background-color: rgba(43, 43, 43, 1.0);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Definició del desplegable que permet elegir l'any */
+#selectorAny {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(24, 24, 24, 1.0);
+    color: rgba(109, 118, 129, 1.0);
+    border: 2px solid rgba(43, 43, 43, 1.0);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#selectorAny:hover {
+    background-color: rgba(43, 43, 43, 1.0);
+}
+
+#selectorAny:focus {
+    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 2px rgba(43, 43, 43, 1.0); 
+}
+
+#selectorAny option {
+    padding: 10px;
+    background-color: rgba(43, 43, 43, 1.0);
+    color: rgba(109, 118, 129, 1.0);
+}
+
+/* Definició del botons que permeten canviar entre la visualització per anys o l'evolutiu */
+#mostrarVisualitzacioPerAny, #mostrarVisualitzacioEvolutiu {
+    width: 49%;
+    padding: 10px;
+    background-color: rgba(24, 24, 24, 1.0);
+    color: rgba(109, 118, 129, 1.0);
+    border: 2px solid rgba(43, 43, 43, 1.0);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+#mostrarVisualitzacioPerAny:hover, #mostrarVisualitzacioEvolutiu:hover {
+    background-color: rgba(43, 43, 43, 1.0);
+}
+
+#mostrarVisualitzacioPerAny:active, #mostrarVisualitzacioEvolutiu:active {
+    background-color: rgba(43, 43, 43, 1.0);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}

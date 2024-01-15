@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCN en xifres: Una mirada a la realitat de la seguretat viària a Barcelona</title>
+        <link rel="stylesheet" href="full_estils.css">
+        <script src="https://d3js.org/d3.v7.js"></script>
+    </head>
+    <body>
+        <div id="tooltip" style="position: absolute; visibility: hidden; pointer-events: none; padding: 8px; background: rgba(0,0,0,0.75); color: white; border-radius: 4px; text-align: center; z-index: 100000;"></div>
+        <div class="layout">
+            <div class="left-panel">
+                <div class="top"></div>
+                <div class="middle">
+                    <select id="selectorAny"></select>
+                </div>
+                <div class="bottom">
+                    <button id="toggleButtonVehicle">Tipus de vehicle</button>
+                    <div id="checkboxTipusVehicle" class="checkbox-container desplegable" style="display: none;">
+                        <div id="checkboxTipusVehicle" class="checkbox-container"></div>
+                    </div>
+                </div>
+                <div class="foot">
+                    <button id="mostrarVisualitzacioPerAny">Per any</button>
+                    <button id="mostrarVisualitzacioEvolutiu">Global</button>
+                </div>
+            </div>
+            <div class="main">
+                <div class="title">BCN en xifres: Una mirada a la realitat de la seguretat viària a Barcelona</div>
+                <div id="main_top" class="top">
+                    <div id="stats_accidents" class="stats"><svg id="st1_accidents" width="100%" height="100%"></svg></div>
+                    <div id="stats_morts" class="stats"><svg id="st2_morts" width="100%" height="100%"></svg></div>
+                    <div id="stats_greus" class="stats"><svg id="st3_greus" width="100%" height="100%"></svg></div>
+                    <div id="stats_lleus" class="stats"><svg id="st4_lleus" width="100%" height="100%"></svg></div>
+                </div>
+                <div id="main_middle"  class="middle">
+                    <div id="victimitzacio_mes" class="vict_mes"><svg id="gf3_nightingdale_mes" width="100%" height="100%"></svg></div>
+                    <div id="victimitzacio_setmana" class="vict_setmana"><svg id="gf4_nightingdale_setmana" width="100%" height="100%"></svg></div>
+                    <div id="victimitzacio_hora" class="vict_hora"><svg id="gf5_nightingdale_hora" width="100%" height="100%"></svg></div>
+                </div>
+                <div id="main_bottom"  class="bottom">
+                    <div id="bombolles_zoom" class="bombolles"><svg id="gf2_bombolles_zoom" width="100%" height="100%"></svg></div>
+                    <div id="mapa_cloropletic" class="mapa"><svg id="gf1_mapa_clor_districtes" width="100%" height="100%"></svg></div>
+                </div>
+                <div id="main_top_evo" class="top_evo">
+                    <div id="evolucio_anys" class="evo_anys"><svg id="gf6_evo_lines" width="100%" height="100%"></svg></div>
+                </div>
+                <div id="main_bottom_evo" class="bottom_evo">
+                    <div id="evolucio_causa_mort_vianant" class="evo_causa_vianant"><svg id="gf7_evo_causa_vianant" width="100%" height="100%"></svg></div>
+                    <div id="evolucio_vehicles" class="evo_vehicles"><svg id="gf8_evo_vehicles" width="100%" height="100%"></svg></div>
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
