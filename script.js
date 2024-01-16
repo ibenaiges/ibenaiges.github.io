@@ -1,131 +1,3 @@
-// Creem una funció per intentar normalitzar les cadenes de texte per poder
-// utilitzar-los com a identificadors:
-function normalitzaCadena(cadena) {
-    return cadena.replace(/\s+/g, '_').replace(/[^\w\-]/g, '');
-}
-
-// Funció per mostrar el tooltip amb la info:
-function showTooltip(event, tooltipText) {
-    const tooltip = d3.select("#tooltip");
-    const pageWidth = window.innerWidth;
-    const pageHeight = window.innerHeight;
-    const tooltipWidth = tooltip.node().offsetWidth;
-    const tooltipHeight = tooltip.node().offsetHeight;
-
-    // Definim la posició inicial/per defecte a la dreta i a sota del cursor:
-    let x = event.pageX + 10;
-    let y = event.pageY + 10;
-
-    // Ajustem la posició x si el tooltip quedés fora de la pantalla:
-    if (x + tooltipWidth > pageWidth) {
-        x = event.pageX - tooltipWidth - 10;
-    }
-
-    // Ajustem la posició y si el tooltip quedés fora de la pantalla:
-    if (y + tooltipHeight > pageHeight) {
-        y = event.pageY - tooltipHeight - 10;
-    }
-
-    // Posicionem i mostrem el tooltip a la posició adequada:
-    tooltip.style("left", x + "px")
-        .style("top", y + "px")
-        .html(tooltipText)
-        .style("visibility", "visible");
-}
-
-// Funció per a moure el tooltip:
-function moveTooltip(event) {
-    const tooltip = d3.select("#tooltip");
-    const pageWidth = window.innerWidth;
-    const pageHeight = window.innerHeight;
-    const tooltipWidth = tooltip.node().offsetWidth;
-    const tooltipHeight = tooltip.node().offsetHeight;
-
-    // Definim la posició inicial/per defecte a la dreta i a sota del cursor:
-    let x = event.pageX + 10;
-    let y = event.pageY + 10;
-
-    // Ajustem la posició x si el tooltip quedés fora de la pantalla:
-    if (x + tooltipWidth > pageWidth) {
-        x = event.pageX - tooltipWidth - 10;
-    }
-
-    // Ajustem la posició y si el tooltip quedés fora de la pantalla:
-    if (y + tooltipHeight > pageHeight) {
-        y = event.pageY - tooltipHeight - 10;
-    }
-
-    // Posicionem i mostrem el tooltip a la posició adequada:
-    tooltip
-        .style("left", x + "px")
-        .style("top", y + "px");
-}
-
-// Funció per a amagar el tooltip:
-function hideTooltip() {
-    d3.select("#tooltip").style("visibility", "hidden");
-}
-
-// Afegim la utilitat per moure'ns entre un conjunt de visualitzacions o 
-// l'evolutiu, a partir d'amagar o mostrar certes parts de la pàgina:
-let buttonVisualitzacioPerAny = document.getElementById('mostrarVisualitzacioPerAny');
-let buttonVisualitzacioEvolutiu = document.getElementById('mostrarVisualitzacioEvolutiu');
-let divMainTop = document.getElementById('main_top');
-let divMainMiddle = document.getElementById('main_middle');
-let divMainBottom = document.getElementById('main_bottom');
-let divMainTopEvo = document.getElementById('main_top_evo');
-let divMainBottomEvo = document.getElementById('main_bottom_evo');
-let butnTipusVehucle = document.getElementById('toggleButtonVehicle');
-let butnTipusCausa = document.getElementById('toggleButtonCause');
-let butnPersona = document.getElementById('toggleButtonPersona');
-let butnVictimitzacio = document.getElementById('toggleButtonVictimitzacio');
-let butnSexe = document.getElementById('toggleButtonSexe');
-let butnDiaSetmana = document.getElementById('toggleButtonDiaSetmana');
-let butnTornDia = document.getElementById('toggleButtonTornDia');
-let butnBarri = document.getElementById('toggleButtonBarri');
-let dpbxAnys = document.getElementById('selectorAny');
-
-// Afegim el gestor d'esdeveniments als botons:
-buttonVisualitzacioPerAny.addEventListener('click', () => {
-    // Amaguem els div que no volem mostrar:
-    divMainTopEvo.style.display = 'none';
-    divMainBottomEvo.style.display = 'none';
-    
-    // Mostrem els div que volem mostrar:
-    divMainTop.style.display = 'flex';
-    divMainMiddle.style.display = 'flex';
-    divMainBottom.style.display = 'flex';
-    butnTipusVehucle.style.display = 'block';
-    butnTipusCausa.style.display = 'block';
-    butnPersona.style.display = 'block';
-    butnVictimitzacio.style.display = 'block';
-    butnSexe.style.display = 'block';
-    butnDiaSetmana.style.display = 'block';
-    butnTornDia.style.display = 'block';
-    butnBarri.style.display = 'block';
-    dpbxAnys.style.display = 'block';
-});
-
-buttonVisualitzacioEvolutiu.addEventListener('click', () => {
-    // Amaguem els div que no volem mostrar:
-    divMainTop.style.display = 'none';
-    divMainMiddle.style.display = 'none';
-    divMainBottom.style.display = 'none';
-    butnTipusVehucle.style.display = 'none';
-    butnTipusCausa.style.display = 'none';
-    butnPersona.style.display = 'none';
-    butnVictimitzacio.style.display = 'none';
-    butnSexe.style.display = 'none';
-    butnDiaSetmana.style.display = 'none';
-    butnTornDia.style.display = 'none';
-    butnBarri.style.display = 'none';
-    dpbxAnys.style.display = 'none';
-
-    // Mostrem els div que volem mostrar:
-    divMainTopEvo.style.display = 'flex';
-    divMainBottomEvo.style.display = 'flex';
-});
-
 // És necessari carregar les dades per poder utilitzar-les en la generació 
 // del dashboard, a partir del fitxer CSV que vam generar en la primera part:
 d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
@@ -145,6 +17,157 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     // ---------------------------------------------------------------------
     // 00. FUNCIÓ DE FILTRAT DE DADES:
     // ---------------------------------------------------------------------
+    // Creem una funció per intentar normalitzar les cadenes de texte per poder
+    // utilitzar-los com a identificadors:
+    function normalitzaCadena(cadena) {
+        return cadena.replace(/\s+/g, '_').replace(/[^\w\-]/g, '');
+    }
+
+    // Funció per mostrar el tooltip amb la info:
+    function showTooltip(event, tooltipText) {
+        const tooltip = d3.select("#tooltip");
+        const pageWidth = window.innerWidth;
+        const pageHeight = window.innerHeight;
+        const tooltipWidth = tooltip.node().offsetWidth;
+        const tooltipHeight = tooltip.node().offsetHeight;
+
+        // Definim la posició inicial/per defecte a la dreta i a sota del cursor:
+        let x = event.pageX + 10;
+        let y = event.pageY + 10;
+
+        // Ajustem la posició x si el tooltip quedés fora de la pantalla:
+        if (x + tooltipWidth > pageWidth) {
+            x = event.pageX - tooltipWidth - 10;
+        }
+
+        // Ajustem la posició y si el tooltip quedés fora de la pantalla:
+        if (y + tooltipHeight > pageHeight) {
+            y = event.pageY - tooltipHeight - 10;
+        }
+
+        // Posicionem i mostrem el tooltip a la posició adequada:
+        tooltip.style("left", x + "px")
+            .style("top", y + "px")
+            .html(tooltipText)
+            .style("visibility", "visible");
+    }
+
+    // Funció per a moure el tooltip:
+    function moveTooltip(event) {
+        const tooltip = d3.select("#tooltip");
+        const pageWidth = window.innerWidth;
+        const pageHeight = window.innerHeight;
+        const tooltipWidth = tooltip.node().offsetWidth;
+        const tooltipHeight = tooltip.node().offsetHeight;
+
+        // Definim la posició inicial/per defecte a la dreta i a sota del cursor:
+        let x = event.pageX + 10;
+        let y = event.pageY + 10;
+
+        // Ajustem la posició x si el tooltip quedés fora de la pantalla:
+        if (x + tooltipWidth > pageWidth) {
+            x = event.pageX - tooltipWidth - 10;
+        }
+
+        // Ajustem la posició y si el tooltip quedés fora de la pantalla:
+        if (y + tooltipHeight > pageHeight) {
+            y = event.pageY - tooltipHeight - 10;
+        }
+
+        // Posicionem i mostrem el tooltip a la posició adequada:
+        tooltip
+            .style("left", x + "px")
+            .style("top", y + "px");
+    }
+
+    // Funció per a amagar el tooltip:
+    function hideTooltip() {
+        d3.select("#tooltip").style("visibility", "hidden");
+    }
+
+    // Afegim la utilitat per moure'ns entre un conjunt de visualitzacions o 
+    // l'evolutiu, a partir d'amagar o mostrar certes parts de la pàgina:
+    let buttonVisualitzacioPerAny = document.getElementById('mostrarVisualitzacioPerAny');
+    let buttonVisualitzacioEvolutiu = document.getElementById('mostrarVisualitzacioEvolutiu');
+    let divMainTop = document.getElementById('main_top');
+    let divMainMiddle = document.getElementById('main_middle');
+    let divMainBottom = document.getElementById('main_bottom');
+    let divMainTopEvo = document.getElementById('main_top_evo');
+    let divMainBottomEvo = document.getElementById('main_bottom_evo');
+    let butnTipusVehucle = document.getElementById('toggleButtonVehicle');
+    let butnTipusCausa = document.getElementById('toggleButtonCause');
+    let butnPersona = document.getElementById('toggleButtonPersona');
+    let butnVictimitzacio = document.getElementById('toggleButtonVictimitzacio');
+    let butnSexe = document.getElementById('toggleButtonSexe');
+    let butnDiaSetmana = document.getElementById('toggleButtonDiaSetmana');
+    let butnTornDia = document.getElementById('toggleButtonTornDia');
+    let butnBarri = document.getElementById('toggleButtonBarri');
+    let butnTipusVehucleEvo = document.getElementById('toggleButtonVehicleEvo');
+    let butnSexeEvo = document.getElementById('toggleButtonSexeEvo');
+    let butnBarriEvo = document.getElementById('toggleButtonBarriEvo');
+    let dpbxAnys = document.getElementById('selectorAny');
+
+    // Afegim un control de la pàgina en la que ens trobem:
+    let evolution = false;
+
+    // Afegim el gestor d'esdeveniments als botons:
+    buttonVisualitzacioPerAny.addEventListener('click', () => {
+        // Amaguem els div que no volem mostrar:
+        divMainTopEvo.style.display = 'none';
+        divMainBottomEvo.style.display = 'none';
+        butnTipusVehucleEvo.style.display = 'none';
+        butnSexeEvo.style.display = 'none';
+        butnBarriEvo.style.display = 'none';
+        
+        // Mostrem els div que volem mostrar:
+        divMainTop.style.display = 'flex';
+        divMainMiddle.style.display = 'flex';
+        divMainBottom.style.display = 'flex';
+        butnTipusVehucle.style.display = 'block';
+        butnTipusCausa.style.display = 'block';
+        butnPersona.style.display = 'block';
+        butnVictimitzacio.style.display = 'block';
+        butnSexe.style.display = 'block';
+        butnDiaSetmana.style.display = 'block';
+        butnTornDia.style.display = 'block';
+        butnBarri.style.display = 'block';
+        dpbxAnys.style.display = 'block';
+
+        // Canviem la pàgina en la que ens trobem:
+        evolution = false;
+
+        // Inicialitzem els diferents gràfics amb les opcions de filtratge seleccionats:
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
+    });
+
+    buttonVisualitzacioEvolutiu.addEventListener('click', () => {
+        // Amaguem els div que no volem mostrar:
+        divMainTop.style.display = 'none';
+        divMainMiddle.style.display = 'none';
+        divMainBottom.style.display = 'none';
+        butnTipusVehucle.style.display = 'none';
+        butnTipusCausa.style.display = 'none';
+        butnPersona.style.display = 'none';
+        butnVictimitzacio.style.display = 'none';
+        butnSexe.style.display = 'none';
+        butnDiaSetmana.style.display = 'none';
+        butnTornDia.style.display = 'none';
+        butnBarri.style.display = 'none';
+        dpbxAnys.style.display = 'none';
+
+        // Mostrem els div que volem mostrar:
+        divMainTopEvo.style.display = 'flex';
+        divMainBottomEvo.style.display = 'flex';
+        butnTipusVehucleEvo.style.display = 'block';
+        butnSexeEvo.style.display = 'block';
+        butnBarriEvo.style.display = 'block';
+
+        // Canviem la pàgina en la que ens trobem:
+        evolution = true;
+
+        // Inicialitzem els diferents gràfics amb les opcions de filtratge seleccionats:
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
+    });
 
     // Creem una funció que retorna els tipus de vehicle seleccionats en el filtre:
     function getVehiclesFilter() {
@@ -222,20 +245,63 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
         });
         return tipusSeleccionats;
     }
+
+    // Creem una funció que retorna els tipus de vehicle seleccionats en el filtre:
+    function getVehiclesEvoFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxTipusVehicleEvo input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+    // Creem una funció que retorna el sexe de les persones implicades seleccionades en el filtre:
+    function getSexeEvoFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxSexeEvo input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+    // Creem una funció que retorna els barris seleccionades en el filtre:
+    function getBarriEvoFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxBarriEvo input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
     
     // Creem una funció per filtrar les dades segons els valors seleccionats:
     function filterData(dades, anySeleccionat, tipusVehiclesSeleccionats, tipusCausaSeleccionats, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri) {
         return dades.filter(d => d["NK_ Any"] === parseInt(anySeleccionat) && tipusVehiclesSeleccionats.includes(d.Desc_Tipus_vehicle_implicat) && tipusCausaSeleccionats.includes(d.Descripcio_causa_vianant) && tipusPersona.includes(d.Descripcio_tipus_persona) && tipusVictimitzacio.includes(d.Descripcio_victimitzacio) && sexe.includes(d.Descripcio_sexe) && diaSetmana.includes(d.Descripcio_dia_setmana) && torn.includes(d.Descripcio_torn) && barri.includes(d.Nom_barri));
     }
 
-    function updateCharts(any, tipusVehicles, tipusCausa, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri) {
-        let filteredData = filterData(data, any, tipusVehicles, tipusCausa, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri);
-        updateStats(filteredData);
-        updateChloropleticMapChart(filteredData);
-        updateZoomableBubblesChart(filteredData);
-        updateNightingaleRoseMonthChart(filteredData);
-        updateNightingaleRoseWeekDaysChart(filteredData);
-        updateNightingaleRoseTimeChart(filteredData);
+    // Creem una funció per filtrar les dades dels gràfics evolutius segons els valors seleccionats:
+    function filterDataEvo(dades, tipusVehiclesSeleccionats, sexe, barri) {
+        return dades.filter(d => tipusVehiclesSeleccionats.includes(d.Desc_Tipus_vehicle_implicat) && sexe.includes(d.Descripcio_sexe) && barri.includes(d.Nom_barri));
+    }
+
+    // Creem una funció per filtrar les dades:
+    function updateCharts(any, tipusVehicles, tipusCausa, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri, tipusVehicleEvo, sexeEvo, barriEvo, evo) {
+        if (!evo){
+            // Dades dels gràfics per any:
+            let filteredData = filterData(data, any, tipusVehicles, tipusCausa, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri);
+            updateStats(filteredData);
+            updateChloropleticMapChart(filteredData);
+            updateZoomableBubblesChart(filteredData);
+            updateNightingaleRoseMonthChart(filteredData);
+            updateNightingaleRoseWeekDaysChart(filteredData);
+            updateNightingaleRoseTimeChart(filteredData);
+        }
+        else {
+            // Dades dels gràfics evolutius:
+            let filteredDataEvo = filterDataEvo(data, tipusVehicleEvo, sexeEvo, barriEvo);
+            updateLineEvolutionChart(filteredDataEvo);
+            updateTreeMapCausaVianantsChart(filteredDataEvo);
+            updateTreeMapTipusVehicleChart(filteredDataEvo);
+        }
     }
 
     // ---------------------------------------------------------------------
@@ -275,7 +341,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     
     // Afegim un event listener per al selector d'anys:
     d3.select("#selectorAny").on("change", function() {
-        updateCharts(this.value, getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(this.value, getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -311,7 +377,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes de tipus de vehicle:
     d3.selectAll("#checkboxTipusVehicle input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter()), evolution;
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -347,7 +413,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes de tipus de causa:
     d3.selectAll("#checkboxTipusCausa input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -383,7 +449,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes de tipus de persona:
     d3.selectAll("#checkboxTipusPersona input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -419,7 +485,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes de tipus de victimització:
     d3.selectAll("#checkboxTipusVictimitzacio input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -455,7 +521,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes del sexe:
     d3.selectAll("#checkboxSexe input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -491,7 +557,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes del dia de la setmana:
     d3.selectAll("#checkboxDiaSetmana input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -527,7 +593,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes del torn del dia:
     d3.selectAll("#checkboxTornDia input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -563,7 +629,115 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes del torn del dia:
     d3.selectAll("#checkboxBarri input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonBarriEvo = d3.select("#toggleButtonBarriEvo");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxBarriEvo = d3.select("#checkboxBarriEvo");
+
+    // Creem una funció per a alternar la visibilitat del desplegable del torn del dia:
+    toggleButtonBarriEvo.on("click", function() {
+        let displayStatus = checkboxBarriEvo.style("display");
+        checkboxBarriEvo.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector del torn del dia a revisar:
+    let tipusBarriEvoUniques = new Set(data.map(d => d.Nom_barri));
+    let checkboxesBarriEvo = d3.select("#checkboxBarriEvo");
+    tipusBarriEvoUniques.forEach(tipus => {
+        let label = checkboxesBarriEvo.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes del torn del dia:
+    d3.selectAll("#checkboxBarriEvo input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonSexeEvo = d3.select("#toggleButtonSexeEvo");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerSexeEvo = d3.select("#checkboxSexeEvo");
+
+    // Creem una funció per a alternar la visibilitat del desplegable del sexe:
+    toggleButtonSexeEvo.on("click", function() {
+        let displayStatus = checkboxContainerSexeEvo.style("display");
+        checkboxContainerSexeEvo.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector del sexe a revisar:
+    let tipusSexeEvoUniques = new Set(data.map(d => d.Descripcio_sexe));
+    let checkboxesSexeEvo = d3.select("#checkboxSexeEvo");
+    tipusSexeEvoUniques.forEach(tipus => {
+        let label = checkboxesSexeEvo.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes del sexe:
+    d3.selectAll("#checkboxSexeEvo input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonVehicleEvo = d3.select("#toggleButtonVehicleEvo");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerEvo = d3.select("#checkboxTipusVehicleEvo");
+
+    // Creem una funció per a alternar la visibilitat del desplegable dels tipus de vehicle:
+    toggleButtonVehicleEvo.on("click", function() {
+        let displayStatus = checkboxContainerEvo.style("display");
+        checkboxContainerEvo.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector dels tipus de vehicle a revisar:
+    let tipusVehiclesEvoUnics = new Set(data.map(d => d.Desc_Tipus_vehicle_implicat));
+    let checkboxesEvo = d3.select("#checkboxTipusVehicleEvo");
+    tipusVehiclesEvoUnics.forEach(tipus => {
+        let label = checkboxesEvo.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes de tipus de vehicle:
+    d3.selectAll("#checkboxTipusVehicleEvo input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
     });
 
     // ---------------------------------------------------------------------
@@ -1491,194 +1665,199 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     // 08. GRÀFIC DE LÍNIES (EVOLUTIU)
     // ---------------------------------------------------------------------
 
-    // Preparem les dades per generar aquest gràfic no actualitzable:
-    let countByYear = {};
-    data.forEach(d => {
-        // Si no existeix l'entrada per l'any, el generem:
-        if (!countByYear[d["NK_ Any"]]) {
-            countByYear[d["NK_ Any"]] = { Morts: 0, Ferits_greus: 0, Ferits_lleus: 0};
+    // Per fer el gràfic interactiu, es defineix una funció que ens permetrà actualitzar el contingut
+    // en temps real:    
+    function updateLineEvolutionChart(dades) {
+        // Preparem les dades per generar aquest gràfic:
+        let countByYear = {};
+        dades.forEach(d => {
+            // Si no existeix l'entrada per l'any, el generem:
+            if (!countByYear[d["NK_ Any"]]) {
+                countByYear[d["NK_ Any"]] = { Morts: 0, Ferits_greus: 0, Ferits_lleus: 0};
+            }
+
+            // Obtenim la descripció de victimització de l'emenet actual, en minúscules:
+            let victimitzacio = d.Descripcio_victimitzacio.toLowerCase();
+
+            // Incrementem el recompte basat en el valor de Descripcio_victimitzacio:
+            if (victimitzacio.includes("mort")) {
+                countByYear[d["NK_ Any"]].Morts++;
+            } else if (victimitzacio.includes("ferit greu")) {
+                countByYear[d["NK_ Any"]].Ferits_greus++;
+            } else if (victimitzacio.includes("ferit lleu")) {
+                countByYear[d["NK_ Any"]].Ferits_lleus++;
+            }
+        });
+
+        // Convertim el resultat en un array d'objectes, per utilitzar-lo en la generació del gràfic:
+        let oDadesGraficLinies = [];
+        for (let any in countByYear) {
+            let entry = { Any: any, ...countByYear[any] };
+            oDadesGraficLinies.push(entry);
         }
 
-        // Obtenim la descripció de victimització de l'emenet actual, en minúscules:
-        let victimitzacio = d.Descripcio_victimitzacio.toLowerCase();
+        // Revisem el tamany de la finestra per calcuar el tamany de la zona on es dibuixarà el gràfic, 
+        // ja que no es pot obtenir directament:
+        let widthEvoAnys = (window.innerWidth * 85) / 100;
+        let heightEvoAnys  = (window.innerHeight * 47.5) / 100;
+        let marge = { top: 50, right: 50, bottom: 50, left: 50 };
 
-        // Incrementem el recompte basat en el valor de Descripcio_victimitzacio:
-        if (victimitzacio.includes("mort")) {
-            countByYear[d["NK_ Any"]].Morts++;
-        } else if (victimitzacio.includes("ferit greu")) {
-            countByYear[d["NK_ Any"]].Ferits_greus++;
-        } else if (victimitzacio.includes("ferit lleu")) {
-            countByYear[d["NK_ Any"]].Ferits_lleus++;
-        }
-    });
+        // Seleccionem el SVG a utilitzar:
+        let svgEvoAnys = d3.select("#gf6_evo_lines");
+        svgEvoAnys.html("");
 
-    // Convertim el resultat en un array d'objectes, per utilitzar-lo en la generació del gràfic:
-    let oDadesGraficLinies = [];
-    for (let any in countByYear) {
-        let entry = { Any: any, ...countByYear[any] };
-        oDadesGraficLinies.push(entry);
+        // Creem les escales necessaries per definir els eixos X i Y del gràfic:
+        let xScaleEvoAnys = d3
+            .scaleBand()
+            .domain(oDadesGraficLinies.map((d) => d.Any))
+            .range([marge.left, widthEvoAnys - marge.right])
+            .padding(0.1);
+
+        let yScaleEvoAnys = d3
+            .scaleLinear()
+            .domain([0, d3.max(oDadesGraficLinies, (d) => d.Ferits_lleus)])
+            .nice()
+            .range([heightEvoAnys - marge.bottom, marge.top]);
+
+        // Afegim l'eix X:
+        svgEvoAnys
+            .append("g")
+            .attr("transform", `translate(0,${heightEvoAnys - marge.bottom})`)
+            .call(d3.axisBottom(xScaleEvoAnys));
+
+            svgEvoAnys.selectAll("line.x-grid").data(xScaleEvoAnys.domain()).enter()
+            .append("line")
+            .attr("class", "x-grid")
+            .attr("y1", 0)
+            .attr("y2", heightEvoAnys)
+            .attr("x1", d => xScaleEvoAnys(d) + xScaleEvoAnys.bandwidth() / 2)
+            .attr("x2", d => xScaleEvoAnys(d) + xScaleEvoAnys.bandwidth() / 2)
+            .attr("stroke", "lightgray")
+            .attr("stroke-width", "1px")
+            .attr("stroke-dasharray", "2,2");
+
+        // Afegim l'eix Y:
+        svgEvoAnys
+            .append("g")
+            .attr("transform", `translate(${marge.left},0)`)
+            .call(d3.axisLeft(yScaleEvoAnys));
+
+        svgEvoAnys.selectAll("line.y-grid").data(yScaleEvoAnys.ticks()).enter()
+            .append("line")
+            .attr("class", "y-grid")
+            .attr("x1", 0)
+            .attr("x2", widthEvoAnys)
+            .attr("y1", d => yScaleEvoAnys(d))
+            .attr("y2", d => yScaleEvoAnys(d))
+            .attr("stroke", "lightgray")
+            .attr("stroke-width", "1px")
+            .attr("stroke-dasharray", "2,2");
+
+        // Creem la línia que mostrarà els morts i l'afegim al gràfic:
+        let lineMorts = d3.line()
+            .x((d) => xScaleEvoAnys(d.Any) + xScaleEvoAnys.bandwidth() / 2)
+            .y((d) => yScaleEvoAnys(d.Morts));
+
+        svgEvoAnys
+            .append("path")
+            .datum(oDadesGraficLinies)
+            .attr("fill", "none")
+            .attr("stroke", "rgba(103, 0, 13, 1)")
+            .attr("stroke-width", 2)
+            .attr("d", lineMorts);
+
+        // Creem la línia que mostrarà els ferits greus i l'afegim al gràfic:
+        let lineGreus = d3.line()
+            .x((d) => xScaleEvoAnys(d.Any) + xScaleEvoAnys.bandwidth() / 2)
+            .y((d) => yScaleEvoAnys(d.Ferits_greus));
+
+        svgEvoAnys
+            .append("path")
+            .datum(oDadesGraficLinies)
+            .attr("fill", "none")
+            .attr("stroke", "rgba(248, 99, 72, 1)")
+            .attr("stroke-width", 2)
+            .attr("d", lineGreus);
+
+        // Creem la línia que mostrarà els ferits lleus i l'afegim al gràfic:
+        let lineLleus = d3.line()
+            .x((d) => xScaleEvoAnys(d.Any) + xScaleEvoAnys.bandwidth() / 2)
+            .y((d) => yScaleEvoAnys(d.Ferits_lleus));
+
+        svgEvoAnys
+            .append("path")
+            .datum(oDadesGraficLinies)
+            .attr("fill", "none")
+            .attr("stroke", "rgba(251, 165, 165, 1)")
+            .attr("stroke-width", 2)
+            .attr("d", lineLleus);
+
+        // Afegim interactivitat al gràfic, a partir de mostrar rectangles invisibles per capturar esdeveniments de ratolí,
+        // que es mostraran en el moment que el ratolí passi per sobre, juntament amb el tooltip amb tota la informació:
+        oDadesGraficLinies.forEach(function(d) {
+            svgEvoAnys.append("rect")
+                .attr("x", xScaleEvoAnys(d.Any))
+                .attr("y", 0)
+                .attr("width", xScaleEvoAnys.bandwidth())
+                .attr("height", heightEvoAnys - marge.bottom)
+                .attr("fill", "transparent")
+                .on("mouseover", function(event) {
+                    d3.select(this)
+                        .attr("fill", "rgba(64, 64, 64, 0.1)")
+                        .attr("stroke", "#rgba(31, 31, 31, 1.0)")
+                        .attr("stroke-width", "5px");
+
+                    showTooltip(event, `Any: ${d.Any}<br/>Morts: ${d.Morts}<br/>Ferits greus: ${d.Ferits_greus}<br/>Ferits lleus: ${d.Ferits_lleus}`);
+                })
+                .on("mousemove", function(event) {
+                    moveTooltip(event);
+                })
+                .on("mouseout", function() {
+                    d3.select(this)
+                        .attr("fill", "transparent")
+                        .attr("stroke", "none");
+
+                    hideTooltip();
+                });
+        });
+
+        // Afegim la llegenda de colors:
+        let legendData = [
+            { label: "Morts", color: "rgba(103, 0, 13, 1)" },
+            { label: "Ferits greus", color: "rgba(248, 99, 72, 1)" },
+            { label: "Ferits lleus", color: "rgba(251, 165, 165, 1)" }
+        ];
+        
+        let legend = svgEvoAnys.selectAll(".legend")
+            .data(legendData)
+            .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", (d, i) => "translate(0," + i * 20 + ")");
+
+        legend.append("rect")
+            .attr("x", widthEvoAnys - 46)
+            .attr("y", 9)
+            .attr("width", 16)
+            .attr("height", 16)
+            .style("fill", d => d.color);
+
+        legend.append("text")
+            .attr("x", widthEvoAnys - 50)
+            .attr("y", 17)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .text(d => d.label);
+
+        // Afegim un títol al gràfic:
+        svgEvoAnys.append('text')
+            .attr("x", widthEvoAnys / 2)
+            .attr("y", (marge.top / 2))
+            .attr('text-anchor', 'middle')
+            .style('font-size', '23px')
+            .style('font-weight', 'bold')
+            .style('font-family', 'Arial')
+            .text('Evolució dels accidents al llarg dels anys');
     }
-
-    // Revisem el tamany de la finestra per calcuar el tamany de la zona on es dibuixarà el gràfic, 
-    // ja que no es pot obtenir directament:
-    let widthEvoAnys = (window.innerWidth * 85) / 100;
-    let heightEvoAnys  = (window.innerHeight * 47.5) / 100;
-    let marge = { top: 50, right: 50, bottom: 50, left: 50 };
-
-    // Seleccionem el SVG a utilitzar:
-    let svgEvoAnys = d3.select("#gf6_evo_lines");
-
-    // Creem les escales necessaries per definir els eixos X i Y del gràfic:
-    let xScaleEvoAnys = d3
-        .scaleBand()
-        .domain(oDadesGraficLinies.map((d) => d.Any))
-        .range([marge.left, widthEvoAnys - marge.right])
-        .padding(0.1);
-
-    let yScaleEvoAnys = d3
-        .scaleLinear()
-        .domain([0, d3.max(oDadesGraficLinies, (d) => d.Ferits_lleus)])
-        .nice()
-        .range([heightEvoAnys - marge.bottom, marge.top]);
-
-    // Afegim l'eix X:
-    svgEvoAnys
-        .append("g")
-        .attr("transform", `translate(0,${heightEvoAnys - marge.bottom})`)
-        .call(d3.axisBottom(xScaleEvoAnys));
-
-        svgEvoAnys.selectAll("line.x-grid").data(xScaleEvoAnys.domain()).enter()
-        .append("line")
-        .attr("class", "x-grid")
-        .attr("y1", 0)
-        .attr("y2", heightEvoAnys)
-        .attr("x1", d => xScaleEvoAnys(d) + xScaleEvoAnys.bandwidth() / 2)
-        .attr("x2", d => xScaleEvoAnys(d) + xScaleEvoAnys.bandwidth() / 2)
-        .attr("stroke", "lightgray")
-        .attr("stroke-width", "1px")
-        .attr("stroke-dasharray", "2,2");
-
-    // Afegim l'eix Y:
-    svgEvoAnys
-        .append("g")
-        .attr("transform", `translate(${marge.left},0)`)
-        .call(d3.axisLeft(yScaleEvoAnys));
-
-    svgEvoAnys.selectAll("line.y-grid").data(yScaleEvoAnys.ticks()).enter()
-        .append("line")
-        .attr("class", "y-grid")
-        .attr("x1", 0)
-        .attr("x2", widthEvoAnys)
-        .attr("y1", d => yScaleEvoAnys(d))
-        .attr("y2", d => yScaleEvoAnys(d))
-        .attr("stroke", "lightgray")
-        .attr("stroke-width", "1px")
-        .attr("stroke-dasharray", "2,2");
-
-    // Creem la línia que mostrarà els morts i l'afegim al gràfic:
-    let lineMorts = d3.line()
-        .x((d) => xScaleEvoAnys(d.Any) + xScaleEvoAnys.bandwidth() / 2)
-        .y((d) => yScaleEvoAnys(d.Morts));
-
-    svgEvoAnys
-        .append("path")
-        .datum(oDadesGraficLinies)
-        .attr("fill", "none")
-        .attr("stroke", "rgba(103, 0, 13, 1)")
-        .attr("stroke-width", 2)
-        .attr("d", lineMorts);
-
-    // Creem la línia que mostrarà els ferits greus i l'afegim al gràfic:
-    let lineGreus = d3.line()
-        .x((d) => xScaleEvoAnys(d.Any) + xScaleEvoAnys.bandwidth() / 2)
-        .y((d) => yScaleEvoAnys(d.Ferits_greus));
-
-    svgEvoAnys
-        .append("path")
-        .datum(oDadesGraficLinies)
-        .attr("fill", "none")
-        .attr("stroke", "rgba(248, 99, 72, 1)")
-        .attr("stroke-width", 2)
-        .attr("d", lineGreus);
-
-    // Creem la línia que mostrarà els ferits lleus i l'afegim al gràfic:
-    let lineLleus = d3.line()
-        .x((d) => xScaleEvoAnys(d.Any) + xScaleEvoAnys.bandwidth() / 2)
-        .y((d) => yScaleEvoAnys(d.Ferits_lleus));
-
-    svgEvoAnys
-        .append("path")
-        .datum(oDadesGraficLinies)
-        .attr("fill", "none")
-        .attr("stroke", "rgba(251, 165, 165, 1)")
-        .attr("stroke-width", 2)
-        .attr("d", lineLleus);
-
-    // Afegim interactivitat al gràfic, a partir de mostrar rectangles invisibles per capturar esdeveniments de ratolí,
-    // que es mostraran en el moment que el ratolí passi per sobre, juntament amb el tooltip amb tota la informació:
-    oDadesGraficLinies.forEach(function(d) {
-        svgEvoAnys.append("rect")
-            .attr("x", xScaleEvoAnys(d.Any))
-            .attr("y", 0)
-            .attr("width", xScaleEvoAnys.bandwidth())
-            .attr("height", heightEvoAnys - marge.bottom)
-            .attr("fill", "transparent")
-            .on("mouseover", function(event) {
-                d3.select(this)
-                    .attr("fill", "rgba(64, 64, 64, 0.1)")
-                    .attr("stroke", "#rgba(31, 31, 31, 1.0)")
-                    .attr("stroke-width", "5px");
-
-                showTooltip(event, `Any: ${d.Any}<br/>Morts: ${d.Morts}<br/>Ferits greus: ${d.Ferits_greus}<br/>Ferits lleus: ${d.Ferits_lleus}`);
-            })
-            .on("mousemove", function(event) {
-                moveTooltip(event);
-            })
-            .on("mouseout", function() {
-                d3.select(this)
-                    .attr("fill", "transparent")
-                    .attr("stroke", "none");
-
-                hideTooltip();
-            });
-    });
-
-    // Afegim la llegenda de colors:
-    let legendData = [
-        { label: "Morts", color: "rgba(103, 0, 13, 1)" },
-        { label: "Ferits greus", color: "rgba(248, 99, 72, 1)" },
-        { label: "Ferits lleus", color: "rgba(251, 165, 165, 1)" }
-    ];
-    
-    let legend = svgEvoAnys.selectAll(".legend")
-        .data(legendData)
-        .enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", (d, i) => "translate(0," + i * 20 + ")");
-
-    legend.append("rect")
-        .attr("x", widthEvoAnys - 46)
-        .attr("y", 9)
-        .attr("width", 16)
-        .attr("height", 16)
-        .style("fill", d => d.color);
-
-    legend.append("text")
-        .attr("x", widthEvoAnys - 50)
-        .attr("y", 17)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(d => d.label);
-
-    // Afegim un títol al gràfic:
-    svgEvoAnys.append('text')
-        .attr("x", widthEvoAnys / 2)
-        .attr("y", (marge.top / 2))
-        .attr('text-anchor', 'middle')
-        .style('font-size', '23px')
-        .style('font-weight', 'bold')
-        .style('font-family', 'Arial')
-        .text('Evolució dels accidents al llarg dels anys');
 
     // ---------------------------------------------------------------------
 
@@ -1687,97 +1866,101 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     // 09. TREE MAP CAUSA VIANANT CAUSES VIANANTS (GLOBAL)
     // ---------------------------------------------------------------------
 
-    // Filtrem per incloure només les entrades amb una causa d'accident atribuïda als vianants:
-    let filteredData = data.filter(d => (d.Descripcio_causa_vianant !== "No és causa del vianant" && d.Descripcio_causa_vianant !== "Desconegut"));
+    // Per fer el gràfic interactiu, es defineix una funció que ens permetrà actualitzar el contingut
+    // en temps real:    
+    function updateTreeMapCausaVianantsChart(dades) {
+        // Filtrem per incloure només les entrades amb una causa d'accident atribuïda als vianants:
+        let filteredData = dades.filter(d => (d.Descripcio_causa_vianant !== "No és causa del vianant" && d.Descripcio_causa_vianant !== "Desconegut"));
 
-    // Convertim el resultat en un array d'objectes per utilitzar-lo per generar el gràfic:
-    function creaJerarquiaCausaVianant(data) {
-        let comptes = d3.rollups(data, v => v.length, d => d.Descripcio_causa_vianant);
-        return comptes.map(([key, value]) => ({
-            name: key,
-            value: value
-        }));
-    }
+        // Convertim el resultat en un array d'objectes per utilitzar-lo per generar el gràfic:
+        function creaJerarquiaCausaVianant(data) {
+            let comptes = d3.rollups(data, v => v.length, d => d.Descripcio_causa_vianant);
+            return comptes.map(([key, value]) => ({
+                name: key,
+                value: value
+            }));
+        }
+            
+        // Creem l'objecte jeràrquic per poder utilitzar-lo:
+        let jerarquiaCausaVianant = {
+            name: "accidents",
+            children: creaJerarquiaCausaVianant(filteredData)
+        };
+
+        // Convertim la jerarquia a JSON:
+        let jerarquiaCausaVianantJSON = JSON.stringify(jerarquiaCausaVianant, null, 2);
+        let jerarquiaCausaVianantObject = JSON.parse(jerarquiaCausaVianantJSON);
+
+        // Revisem el tamany de la finestra per calcuar el tamany de la zona on es dibuixarà el gràfic, 
+        // ja que no es pot obtenir directament:
+        let widthCausaVianants = (window.innerWidth * (85/2)) / 100;
+        let heightCausaVianants  = (window.innerHeight * 47.5) / 100;
+        let margeCausaVianants = { top: 40, right: 0, bottom: 0, left: 0 };  
+
+        let rootTree = d3.hierarchy(jerarquiaCausaVianantObject)
+            .sum(d => d.value);
+
+        // Creem el layout del treemap:
+        let treemapLayout = d3.treemap()
+            .size([widthCausaVianants - (margeCausaVianants.right + margeCausaVianants.left), heightCausaVianants - (margeCausaVianants.top + margeCausaVianants.bottom)])
+            .round(true);
+
+        // Apliquem el layout de treemap a les dades:
+        treemapLayout(rootTree);
+
+        // Seleccionem el SVG a utilitzar:
+        let svgCausaVianants = d3.select("#gf7_evo_causa_vianant"); 
+        svgCausaVianants.html("");
+        svgCausaVianants
+            .attr("width", widthCausaVianants)
+            .attr("height", heightCausaVianants);
+
+        // Configurem l'escala de colors, de forma manual:
+        let pastelOranges = ["#FFE2CC", "#FFDCC3", "#FFD6BB", "#FFCFB2", "#FFC9A9", "#FFC3A0", "#FFBD98", "#FFB78F", "#FFB086"];
+        let colorScaleTreeMap = d3.scaleOrdinal()
+            .domain(jerarquiaCausaVianant.children.map(d => d.name))
+            .range(pastelOranges);
+
+        // Dibuixem les cel·les del treemap:
+        svgCausaVianants.selectAll("rect")
+            .data(rootTree.descendants())
+            .enter()
+            .append("rect")
+            .attr("x", d => d.x0)
+            .attr("y", d => d.y0 + 40)
+            .attr("width", d => Math.max(0, d.x1 - d.x0 - 1))
+            .attr("height", d => Math.max(0, d.y1 - d.y0 - 1))
+            .attr("fill", d => colorScaleTreeMap(d.data.name))
+            .attr("stroke", "#6D7681")
+            .attr("stroke-width", "0.2px")
+            .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .style("stroke", "#181818")
+                        .style("stroke-width", "1px");
+
+                    showTooltip(event, `${d.data.name} (${d.value})`);
+                })
+                .on("mousemove", function(event) {
+                    moveTooltip(event);
+                })
+                .on("mouseout", function() {
+                    d3.select(this)
+                        .style("stroke", "#6D7681")
+                        .style("stroke-width", "0.2px");
+
+                    hideTooltip();
+                });
         
-    // Creem l'objecte jeràrquic per poder utilitzar-lo:
-    let jerarquiaCausaVianant = {
-        name: "accidents",
-        children: creaJerarquiaCausaVianant(filteredData)
-    };
-
-    // Convertim la jerarquia a JSON:
-    let jerarquiaCausaVianantJSON = JSON.stringify(jerarquiaCausaVianant, null, 2);
-    let jerarquiaCausaVianantObject = JSON.parse(jerarquiaCausaVianantJSON);
-
-    // Revisem el tamany de la finestra per calcuar el tamany de la zona on es dibuixarà el gràfic, 
-    // ja que no es pot obtenir directament:
-    let widthCausaVianants = (window.innerWidth * (85/2)) / 100;
-    let heightCausaVianants  = (window.innerHeight * 47.5) / 100;
-    let margeCausaVianants = { top: 40, right: 0, bottom: 0, left: 0 };  
-
-    let rootTree = d3.hierarchy(jerarquiaCausaVianantObject)
-        .sum(d => d.value);
-
-    // Creem el layout del treemap:
-    let treemapLayout = d3.treemap()
-        .size([widthCausaVianants - (margeCausaVianants.right + margeCausaVianants.left), heightCausaVianants - (margeCausaVianants.top + margeCausaVianants.bottom)])
-        .round(true);
-
-    // Apliquem el layout de treemap a les dades:
-    treemapLayout(rootTree);
-
-    // Seleccionem el SVG a utilitzar:
-    let svgCausaVianants = d3.select("#gf7_evo_causa_vianant"); 
-    svgCausaVianants.html("");
-    svgCausaVianants
-        .attr("width", widthCausaVianants)
-        .attr("height", heightCausaVianants);
-
-    // Configurem l'escala de colors, de forma manual:
-    let pastelOranges = ["#FFE2CC", "#FFDCC3", "#FFD6BB", "#FFCFB2", "#FFC9A9", "#FFC3A0", "#FFBD98", "#FFB78F", "#FFB086"];
-    let colorScaleTreeMap = d3.scaleOrdinal()
-        .domain(jerarquiaCausaVianant.children.map(d => d.name))
-        .range(pastelOranges);
-
-    // Dibuixem les cel·les del treemap:
-    svgCausaVianants.selectAll("rect")
-        .data(rootTree.descendants())
-        .enter()
-        .append("rect")
-        .attr("x", d => d.x0)
-        .attr("y", d => d.y0 + 40)
-        .attr("width", d => Math.max(0, d.x1 - d.x0 - 1))
-        .attr("height", d => Math.max(0, d.y1 - d.y0 - 1))
-        .attr("fill", d => colorScaleTreeMap(d.data.name))
-        .attr("stroke", "#6D7681")
-        .attr("stroke-width", "0.2px")
-        .on("mouseover", function(event, d) {
-                d3.select(this)
-                    .style("stroke", "#181818")
-                    .style("stroke-width", "1px");
-
-                showTooltip(event, `${d.data.name} (${d.value})`);
-            })
-            .on("mousemove", function(event) {
-                moveTooltip(event);
-            })
-            .on("mouseout", function() {
-                d3.select(this)
-                    .style("stroke", "#6D7681")
-                    .style("stroke-width", "0.2px");
-
-                hideTooltip();
-            });
-    
-    // Afegim un títol al gràfic:
-    svgCausaVianants.append('text')
-        .attr("x", widthCausaVianants / 2)
-        .attr("y", (margeCausaVianants.top / 2) + 8)
-        .attr("text-anchor", "middle")
-        .style('font-size', '23px')
-        .style('font-weight', 'bold')
-        .style('font-family', 'Arial')
-        .text('Distribució per causes del vianant');
+        // Afegim un títol al gràfic:
+        svgCausaVianants.append('text')
+            .attr("x", widthCausaVianants / 2)
+            .attr("y", (margeCausaVianants.top / 2) + 8)
+            .attr("text-anchor", "middle")
+            .style('font-size', '23px')
+            .style('font-weight', 'bold')
+            .style('font-family', 'Arial')
+            .text('Distribució per causes del vianant');
+    }
 
     // ---------------------------------------------------------------------
 
@@ -1786,94 +1969,98 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     // 10. TREE MAP TIPUS VEHICLE (GLOBAL)
     // ---------------------------------------------------------------------
 
-    // Convertim el resultat en un array d'objectes per utilitzar-lo per generar el gràfic:
-    function creaJerarquiaTipusVehicle(data) {
-        let comptes = d3.rollups(data, v => v.length, d => d.Desc_Tipus_vehicle_implicat);
-        return comptes.map(([key, value]) => ({
-            name: key,
-            value: value
-        }));
-    }
+    // Per fer el gràfic interactiu, es defineix una funció que ens permetrà actualitzar el contingut
+    // en temps real:    
+    function updateTreeMapTipusVehicleChart(dades) {
+        // Convertim el resultat en un array d'objectes per utilitzar-lo per generar el gràfic:
+        function creaJerarquiaTipusVehicle(data) {
+            let comptes = d3.rollups(data, v => v.length, d => d.Desc_Tipus_vehicle_implicat);
+            return comptes.map(([key, value]) => ({
+                name: key,
+                value: value
+            }));
+        }
+            
+        // Creem l'objecte jeràrquic per poder utilitzar-lo:
+        let jerarquiaTipusVehicle = {
+            name: "accidents",
+            children: creaJerarquiaTipusVehicle(dades)
+        };
+
+        // Convertim la jerarquia a JSON:
+        let jerarquiaTipusVehicleJSON = JSON.stringify(jerarquiaTipusVehicle, null, 2);
+        let jerarquiaTipusVehicleObject = JSON.parse(jerarquiaTipusVehicleJSON);
+
+        // Revisem el tamany de la finestra per calcuar el tamany de la zona on es dibuixarà el gràfic, 
+        // ja que no es pot obtenir directament:
+        let widthTipusVehicle = (window.innerWidth * (85/2)) / 100;
+        let heightTipusVehicle  = (window.innerHeight * 47.5) / 100;
+        let margeTipusVehicle = { top: 40, right: 0, bottom: 0, left: 0 };  
+
+        let rootTreeTipusVehicle = d3.hierarchy(jerarquiaTipusVehicleObject)
+            .sum(d => d.value);
+
+        // Creem el layout del treemap:
+        let treemapLayoutTipusVehicle = d3.treemap()
+            .size([widthTipusVehicle - (margeTipusVehicle.right + margeTipusVehicle.left), heightTipusVehicle - (margeTipusVehicle.top + margeTipusVehicle.bottom)])
+            .round(true);
+
+        // Apliquem el layout de treemap a les dades:
+        treemapLayoutTipusVehicle(rootTreeTipusVehicle);
+
+        // Seleccionem el SVG a utilitzar:
+        let svgTipusVehicle = d3.select("#gf8_evo_vehicles"); 
+        svgTipusVehicle.html("");
+        svgTipusVehicle
+            .attr("width", widthTipusVehicle)
+            .attr("height", heightTipusVehicle);
+
+        // Configurem l'escala de colors, de forma manual:
+        const pastelOrangesLarge = ["#FFF5E6", "#FFF2E0", "#FFEFDA", "#FFEDD4", "#FFEBCE", "#FFE8C8", "#FFE6C2", "#FFE3BC", "#FFE1B6", "#FFDEB0", "#FFDCAB", "#FFD9A5", "#FFD79F", "#FFD499", "#FFD293", "#FFCF8D", "#FFCD87", "#FFCA81", "#FFC87B", "#FFC575", "#FFC370", "#FFC06A", "#FFBE64", "#FFBB5E", "#FFB958"];
+        let colorScaleTreeMapTipusVehicle = d3.scaleOrdinal()
+            .domain(jerarquiaTipusVehicle.children.map(d => d.name))
+            .range(pastelOrangesLarge);
+
+        // Dibuixem les cel·les del treemap:
+        svgTipusVehicle.selectAll("rect")
+            .data(rootTreeTipusVehicle.descendants())
+            .enter()
+            .append("rect")
+            .attr("x", d => d.x0)
+            .attr("y", d => d.y0 + 40)
+            .attr("width", d => Math.max(0, d.x1 - d.x0 - 1))
+            .attr("height", d => Math.max(0, d.y1 - d.y0 - 1))
+            .attr("fill", d => colorScaleTreeMapTipusVehicle(d.data.name))
+            .attr("stroke", "#6D7681")
+            .attr("stroke-width", "0.2px")
+            .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .style("stroke", "#181818")
+                        .style("stroke-width", "1px");
+
+                    showTooltip(event, `${d.data.name} (${d.value})`);
+                })
+                .on("mousemove", function(event) {
+                    moveTooltip(event);
+                })
+                .on("mouseout", function() {
+                    d3.select(this)
+                        .style("stroke", "#6D7681")
+                        .style("stroke-width", "0.2px");
+
+                    hideTooltip();
+                });
         
-    // Creem l'objecte jeràrquic per poder utilitzar-lo:
-    let jerarquiaTipusVehicle = {
-        name: "accidents",
-        children: creaJerarquiaTipusVehicle(data)
-    };
-
-    // Convertim la jerarquia a JSON:
-    let jerarquiaTipusVehicleJSON = JSON.stringify(jerarquiaTipusVehicle, null, 2);
-    let jerarquiaTipusVehicleObject = JSON.parse(jerarquiaTipusVehicleJSON);
-
-    // Revisem el tamany de la finestra per calcuar el tamany de la zona on es dibuixarà el gràfic, 
-    // ja que no es pot obtenir directament:
-    let widthTipusVehicle = (window.innerWidth * (85/2)) / 100;
-    let heightTipusVehicle  = (window.innerHeight * 47.5) / 100;
-    let margeTipusVehicle = { top: 40, right: 0, bottom: 0, left: 0 };  
-
-    let rootTreeTipusVehicle = d3.hierarchy(jerarquiaTipusVehicleObject)
-        .sum(d => d.value);
-
-    // Creem el layout del treemap:
-    let treemapLayoutTipusVehicle = d3.treemap()
-        .size([widthTipusVehicle - (margeTipusVehicle.right + margeTipusVehicle.left), heightTipusVehicle - (margeTipusVehicle.top + margeTipusVehicle.bottom)])
-        .round(true);
-
-    // Apliquem el layout de treemap a les dades:
-    treemapLayoutTipusVehicle(rootTreeTipusVehicle);
-
-    // Seleccionem el SVG a utilitzar:
-    let svgTipusVehicle = d3.select("#gf8_evo_vehicles"); 
-    svgTipusVehicle.html("");
-    svgTipusVehicle
-        .attr("width", widthTipusVehicle)
-        .attr("height", heightTipusVehicle);
-
-    // Configurem l'escala de colors, de forma manual:
-    const pastelOrangesLarge = ["#FFF5E6", "#FFF2E0", "#FFEFDA", "#FFEDD4", "#FFEBCE", "#FFE8C8", "#FFE6C2", "#FFE3BC", "#FFE1B6", "#FFDEB0", "#FFDCAB", "#FFD9A5", "#FFD79F", "#FFD499", "#FFD293", "#FFCF8D", "#FFCD87", "#FFCA81", "#FFC87B", "#FFC575", "#FFC370", "#FFC06A", "#FFBE64", "#FFBB5E", "#FFB958"];
-    let colorScaleTreeMapTipusVehicle = d3.scaleOrdinal()
-        .domain(jerarquiaTipusVehicle.children.map(d => d.name))
-        .range(pastelOrangesLarge);
-
-    // Dibuixem les cel·les del treemap:
-    svgTipusVehicle.selectAll("rect")
-        .data(rootTreeTipusVehicle.descendants())
-        .enter()
-        .append("rect")
-        .attr("x", d => d.x0)
-        .attr("y", d => d.y0 + 40)
-        .attr("width", d => Math.max(0, d.x1 - d.x0 - 1))
-        .attr("height", d => Math.max(0, d.y1 - d.y0 - 1))
-        .attr("fill", d => colorScaleTreeMapTipusVehicle(d.data.name))
-        .attr("stroke", "#6D7681")
-        .attr("stroke-width", "0.2px")
-        .on("mouseover", function(event, d) {
-                d3.select(this)
-                    .style("stroke", "#181818")
-                    .style("stroke-width", "1px");
-
-                showTooltip(event, `${d.data.name} (${d.value})`);
-            })
-            .on("mousemove", function(event) {
-                moveTooltip(event);
-            })
-            .on("mouseout", function() {
-                d3.select(this)
-                    .style("stroke", "#6D7681")
-                    .style("stroke-width", "0.2px");
-
-                hideTooltip();
-            });
-    
-    // Afegim un títol al gràfic:
-    svgTipusVehicle.append('text')
-        .attr("x", widthTipusVehicle / 2)
-        .attr("y", (margeTipusVehicle.top / 2) + 8)
-        .attr("text-anchor", "middle")
-        .style('font-size', '23px')
-        .style('font-weight', 'bold')
-        .style('font-family', 'Arial')
-        .text('Distribució per tipus de vehicle');
+        // Afegim un títol al gràfic:
+        svgTipusVehicle.append('text')
+            .attr("x", widthTipusVehicle / 2)
+            .attr("y", (margeTipusVehicle.top / 2) + 8)
+            .attr("text-anchor", "middle")
+            .style('font-size', '23px')
+            .style('font-weight', 'bold')
+            .style('font-family', 'Arial')
+            .text('Distribució per tipus de vehicle');
+    }
 
     // ---------------------------------------------------------------------
 
@@ -1883,10 +2070,10 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     // ---------------------------------------------------------------------
 
     // Inicialitzem els diferents gràfics amb les opcions de filtratge per defecte:
-    updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter(), getVehiclesEvoFilter(), getSexeEvoFilter(), getBarriEvoFilter(), evolution);
 
     // ---------------------------------------------------------------------
 })
 .catch(error => {
-    console.error('Error carregant l\'arxiu:', error);
+    console.error('Error:', error);
 });
