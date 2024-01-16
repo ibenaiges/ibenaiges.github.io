@@ -76,6 +76,13 @@ let divMainBottom = document.getElementById('main_bottom');
 let divMainTopEvo = document.getElementById('main_top_evo');
 let divMainBottomEvo = document.getElementById('main_bottom_evo');
 let butnTipusVehucle = document.getElementById('toggleButtonVehicle');
+let butnTipusCausa = document.getElementById('toggleButtonCause');
+let butnPersona = document.getElementById('toggleButtonPersona');
+let butnVictimitzacio = document.getElementById('toggleButtonVictimitzacio');
+let butnSexe = document.getElementById('toggleButtonSexe');
+let butnDiaSetmana = document.getElementById('toggleButtonDiaSetmana');
+let butnTornDia = document.getElementById('toggleButtonTornDia');
+let butnBarri = document.getElementById('toggleButtonBarri');
 let dpbxAnys = document.getElementById('selectorAny');
 
 // Afegim el gestor d'esdeveniments als botons:
@@ -89,6 +96,13 @@ buttonVisualitzacioPerAny.addEventListener('click', () => {
     divMainMiddle.style.display = 'flex';
     divMainBottom.style.display = 'flex';
     butnTipusVehucle.style.display = 'block';
+    butnTipusCausa.style.display = 'block';
+    butnPersona.style.display = 'block';
+    butnVictimitzacio.style.display = 'block';
+    butnSexe.style.display = 'block';
+    butnDiaSetmana.style.display = 'block';
+    butnTornDia.style.display = 'block';
+    butnBarri.style.display = 'block';
     dpbxAnys.style.display = 'block';
 });
 
@@ -98,6 +112,13 @@ buttonVisualitzacioEvolutiu.addEventListener('click', () => {
     divMainMiddle.style.display = 'none';
     divMainBottom.style.display = 'none';
     butnTipusVehucle.style.display = 'none';
+    butnTipusCausa.style.display = 'none';
+    butnPersona.style.display = 'none';
+    butnVictimitzacio.style.display = 'none';
+    butnSexe.style.display = 'none';
+    butnDiaSetmana.style.display = 'none';
+    butnTornDia.style.display = 'none';
+    butnBarri.style.display = 'none';
     dpbxAnys.style.display = 'none';
 
     // Mostrem els div que volem mostrar:
@@ -133,14 +154,82 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
         });
         return tipusSeleccionats;
     }
-    
-    // Creem una funció per filtrar les dades segons l'any i els tipus de vehicle:
-    function filterData(dades, anySeleccionat, tipusVehiclesSeleccionats) {
-        return dades.filter(d => d["NK_ Any"] === parseInt(anySeleccionat) && tipusVehiclesSeleccionats.includes(d.Desc_Tipus_vehicle_implicat));
+
+    // Creem una funció que retorna els tipus de causes seleccionades en el filtre:
+    function getCauseFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxTipusCausa input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
     }
 
-    function updateCharts(any, tipusVehicles) {
-        let filteredData = filterData(data, any, tipusVehicles);
+    // Creem una funció que retorna els tipus de persones implicades seleccionades en el filtre:
+    function getPersonaFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxTipusPersona input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+
+    // Creem una funció que retorna els tipus de victimització seleccionades en el filtre:
+    function getVictimitzacioFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxTipusVictimitzacio input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+
+    // Creem una funció que retorna el sexe de les persones implicades seleccionades en el filtre:
+    function getSexeFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxSexe input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+
+    // Creem una funció que retorna els dies de la setmana seleccionades en el filtre:
+    function getDiaSetmanaFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxDiaSetmana input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+
+    // Creem una funció que retorna els torns del dia seleccionades en el filtre:
+    function getTornFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxTornDia input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+
+
+    // Creem una funció que retorna els barris seleccionades en el filtre:
+    function getBarriFilter() {
+        let tipusSeleccionats = [];
+        d3.selectAll("#checkboxBarri input[type='checkbox']:checked").each(function() {
+            tipusSeleccionats.push(this.value);
+        });
+        return tipusSeleccionats;
+    }
+    
+    // Creem una funció per filtrar les dades segons els valors seleccionats:
+    function filterData(dades, anySeleccionat, tipusVehiclesSeleccionats, tipusCausaSeleccionats, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri) {
+        return dades.filter(d => d["NK_ Any"] === parseInt(anySeleccionat) && tipusVehiclesSeleccionats.includes(d.Desc_Tipus_vehicle_implicat) && tipusCausaSeleccionats.includes(d.Descripcio_causa_vianant) && tipusPersona.includes(d.Descripcio_tipus_persona) && tipusVictimitzacio.includes(d.Descripcio_victimitzacio) && sexe.includes(d.Descripcio_sexe) && diaSetmana.includes(d.Descripcio_dia_setmana) && torn.includes(d.Descripcio_torn) && barri.includes(d.Nom_barri));
+    }
+
+    function updateCharts(any, tipusVehicles, tipusCausa, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri) {
+        let filteredData = filterData(data, any, tipusVehicles, tipusCausa, tipusPersona, tipusVictimitzacio, sexe, diaSetmana, torn, barri);
         updateStats(filteredData);
         updateChloropleticMapChart(filteredData);
         updateZoomableBubblesChart(filteredData);
@@ -186,7 +275,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     
     // Afegim un event listener per al selector d'anys:
     d3.select("#selectorAny").on("change", function() {
-        updateCharts(this.value, getVehiclesFilter());
+        updateCharts(this.value, getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
     });
 
     // Capturem el botó que controla l'aparició del desplegable:
@@ -222,7 +311,259 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
 
     // Afegim un event listener per als checkboxes de tipus de vehicle:
     d3.selectAll("#checkboxTipusVehicle input[type='checkbox']").on("change", function() {
-        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter());
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonCause = d3.select("#toggleButtonCause");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerCause = d3.select("#checkboxTipusCausa");
+
+    // Creem una funció per a alternar la visibilitat del desplegable dels tipus de causa:
+    toggleButtonCause.on("click", function() {
+        let displayStatus = checkboxContainerCause.style("display");
+        checkboxContainerCause.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector dels tipus de causa a revisar:
+    let tipusCausesUniques = new Set(data.map(d => d.Descripcio_causa_vianant));
+    let checkboxesCauses = d3.select("#checkboxTipusCausa");
+    tipusCausesUniques.forEach(tipus => {
+        let label = checkboxesCauses.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes de tipus de causa:
+    d3.selectAll("#checkboxTipusCausa input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonPersona = d3.select("#toggleButtonPersona");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerPersona = d3.select("#checkboxTipusPersona");
+
+    // Creem una funció per a alternar la visibilitat del desplegable dels tipus de persona:
+    toggleButtonPersona.on("click", function() {
+        let displayStatus = checkboxContainerPersona.style("display");
+        checkboxContainerPersona.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector dels tipus de persona a revisar:
+    let tipusPersonaUniques = new Set(data.map(d => d.Descripcio_tipus_persona));
+    let checkboxesPersona = d3.select("#checkboxTipusPersona");
+    tipusPersonaUniques.forEach(tipus => {
+        let label = checkboxesPersona.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes de tipus de persona:
+    d3.selectAll("#checkboxTipusPersona input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonVictimitzacio = d3.select("#toggleButtonVictimitzacio");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerVictimitzacio = d3.select("#checkboxTipusVictimitzacio");
+
+    // Creem una funció per a alternar la visibilitat del desplegable dels tipus de victimització:
+    toggleButtonVictimitzacio.on("click", function() {
+        let displayStatus = checkboxContainerVictimitzacio.style("display");
+        checkboxContainerVictimitzacio.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector dels tipus de visctimització a revisar:
+    let tipusVictimitzacioUniques = new Set(data.map(d => d.Descripcio_victimitzacio));
+    let checkboxesVictimitzacio = d3.select("#checkboxTipusVictimitzacio");
+    tipusVictimitzacioUniques.forEach(tipus => {
+        let label = checkboxesVictimitzacio.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes de tipus de victimització:
+    d3.selectAll("#checkboxTipusVictimitzacio input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonSexe = d3.select("#toggleButtonSexe");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerSexe = d3.select("#checkboxSexe");
+
+    // Creem una funció per a alternar la visibilitat del desplegable del sexe:
+    toggleButtonSexe.on("click", function() {
+        let displayStatus = checkboxContainerSexe.style("display");
+        checkboxContainerSexe.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector del sexe a revisar:
+    let tipusSexeUniques = new Set(data.map(d => d.Descripcio_sexe));
+    let checkboxesSexe = d3.select("#checkboxSexe");
+    tipusSexeUniques.forEach(tipus => {
+        let label = checkboxesSexe.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes del sexe:
+    d3.selectAll("#checkboxSexe input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonDiaSetmana = d3.select("#toggleButtonDiaSetmana");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerDiaSetmana = d3.select("#checkboxDiaSetmana");
+
+    // Creem una funció per a alternar la visibilitat del desplegable del dia de la setmana:
+    toggleButtonDiaSetmana.on("click", function() {
+        let displayStatus = checkboxContainerDiaSetmana.style("display");
+        checkboxContainerDiaSetmana.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector del dia de la setmana a revisar:
+    let tipusDiaSetmanaUniques = new Set(data.map(d => d.Descripcio_dia_setmana));
+    let checkboxesDiaSetmana = d3.select("#checkboxDiaSetmana");
+    tipusDiaSetmanaUniques.forEach(tipus => {
+        let label = checkboxesDiaSetmana.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes del dia de la setmana:
+    d3.selectAll("#checkboxDiaSetmana input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonTornDia = d3.select("#toggleButtonTornDia");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxContainerTornDia = d3.select("#checkboxTornDia");
+
+    // Creem una funció per a alternar la visibilitat del desplegable del torn del dia:
+    toggleButtonTornDia.on("click", function() {
+        let displayStatus = checkboxContainerTornDia.style("display");
+        checkboxContainerTornDia.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector del torn del dia a revisar:
+    let tipusTornDiaUniques = new Set(data.map(d => d.Descripcio_torn));
+    let checkboxesTornDia = d3.select("#checkboxTornDia");
+    tipusTornDiaUniques.forEach(tipus => {
+        let label = checkboxesTornDia.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes del torn del dia:
+    d3.selectAll("#checkboxTornDia input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
+    });
+
+    // Capturem el botó que controla l'aparició del desplegable:
+    let toggleButtonBarri = d3.select("#toggleButtonBarri");
+
+    // Capturem el div que conté els checkboxes:
+    let checkboxBarri = d3.select("#checkboxBarri");
+
+    // Creem una funció per a alternar la visibilitat del desplegable del torn del dia:
+    toggleButtonBarri.on("click", function() {
+        let displayStatus = checkboxBarri.style("display");
+        checkboxBarri.style("display", displayStatus === "none" ? "block" : "none");
+    });
+
+    // Omplim els controls de filtre de selector del torn del dia a revisar:
+    let tipusBarriUniques = new Set(data.map(d => d.Nom_barri));
+    let checkboxesBarri = d3.select("#checkboxBarri");
+    tipusBarriUniques.forEach(tipus => {
+        let label = checkboxesBarri.append('div')
+            .attr('class', 'checkbox-option')
+            .append('label');
+        
+        label.append('input')
+            .attr('type', 'checkbox')
+            .attr('id', tipus)
+            .attr('name', 'vehicle')
+            .attr('value', tipus)
+            .property('checked', true); 
+        
+        label.append('span')
+            .text(tipus);
+    });
+
+    // Afegim un event listener per als checkboxes del torn del dia:
+    d3.selectAll("#checkboxBarri input[type='checkbox']").on("change", function() {
+        updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
     });
 
     // ---------------------------------------------------------------------
@@ -1542,7 +1883,7 @@ d3.csv("dfImplicatsAccidentsBCN.csv", d3.autoType).then(function(data) {
     // ---------------------------------------------------------------------
 
     // Inicialitzem els diferents gràfics amb les opcions de filtratge per defecte:
-    updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter());
+    updateCharts(d3.select("#selectorAny").property("value"), getVehiclesFilter(), getCauseFilter(), getPersonaFilter(), getVictimitzacioFilter(), getSexeFilter(), getDiaSetmanaFilter(), getTornFilter(), getBarriFilter());
 
     // ---------------------------------------------------------------------
 })
